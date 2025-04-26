@@ -5,7 +5,7 @@ Error handling in Ansible: Lets learn error handling. Consider a below real exam
 4. If it is not installed then install it
 
 When you see output you can see like this & we can fetch the failed.
-
+```
 ok: [13.219.73.74] => {
     "output": {
         "changed": false,
@@ -19,3 +19,4 @@ ok: [13.219.73.74] => {
         "stdout_lines": []
     }
 }
+```
