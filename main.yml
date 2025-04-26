@@ -1,0 +1,27 @@
+---
+- hosts: all
+  become: true
+
+  tasks:
+    - name: Check whether openssl & openssh are installed with latest versions
+      ansible.builtin.apt:
+        name: "{{item}}"
+        state: latest
+      loop:
+        - openssh
+        - openssl 
+      ignore_errors: yes   #to ignore the errors and go to next steps   
+    - name: Check Docker versions
+      ansible.builtin.command: docker --version
+      register: output   # to store output of cmd in variable
+      ignore_errors: yes  
+    #- ansible.builtin.debug:   #to see output of register & write failed_when according faile but we using ignore_errors here
+     #   var: output 
+    - name: Update system
+      ansible.builtin.command: apt update -y
+    - name: Install Docker it is not installed
+      ansible.builtin.apt:
+        name: docker.io
+        state: present    
+      when:
+        output.failed == true  
